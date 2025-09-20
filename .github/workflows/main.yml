@@ -18,9 +18,19 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker Metadata action
+        id: metadata
         uses: docker/metadata-action@v5.8.0
         with:
           images: amadou11/riview_pipeline_declarative
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v6.18.0
+        with:
+          contex: .
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          
+        
 
       
 
